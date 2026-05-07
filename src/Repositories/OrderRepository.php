@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace BotGear\Repositories;
+namespace DeviceStore\Repositories;
 
-use BotGear\Core\FileDatabase;
+use DeviceStore\Core\FileDatabase;
 
 /**
- * Provides order persistence operations.
+ * Выполняет операции хранения заказов.
  */
 final class OrderRepository
 {
     private FileDatabase $db;
 
     /**
-     * Stores the database dependency.
+     * Сохраняет зависимость базы данных.
      *
-     * @param FileDatabase $db Application database.
+     * @param FileDatabase $db База данных приложения.
      */
     public function __construct(FileDatabase $db)
     {
@@ -24,9 +24,9 @@ final class OrderRepository
     }
 
     /**
-     * Returns all orders sorted by newest first.
+     * Возвращает все заказы с сортировкой от новых к старым.
      *
-     * @return array<int, array<string, mixed>> Order records.
+     * @return array<int, array<string, mixed>> Записи заказов.
      */
     public function all(): array
     {
@@ -37,10 +37,10 @@ final class OrderRepository
     }
 
     /**
-     * Returns orders for a user.
+     * Возвращает заказы пользователя.
      *
-     * @param int $userId User identifier.
-     * @return array<int, array<string, mixed>> User orders.
+     * @param int $userId Идентификатор пользователя.
+     * @return array<int, array<string, mixed>> Заказы пользователя.
      */
     public function forUser(int $userId): array
     {
@@ -51,10 +51,10 @@ final class OrderRepository
     }
 
     /**
-     * Creates an order record.
+     * Создает запись заказа.
      *
-     * @param array<string, mixed> $data Order values.
-     * @return array<string, mixed> Created order.
+     * @param array<string, mixed> $data Значения заказа.
+     * @return array<string, mixed> Созданный заказ.
      */
     public function create(array $data): array
     {
@@ -66,11 +66,11 @@ final class OrderRepository
     }
 
     /**
-     * Updates an order status.
+     * Обновляет статус заказа.
      *
-     * @param int $id Order identifier.
-     * @param string $status New status.
-     * @return array<string, mixed>|null Updated order or null.
+     * @param int $id Идентификатор заказа.
+     * @param string $status Новый статус.
+     * @return array<string, mixed>|null Обновленный заказ или null.
      */
     public function updateStatus(int $id, string $status): ?array
     {
@@ -85,10 +85,10 @@ final class OrderRepository
     }
 
     /**
-     * Counts orders by status.
+     * Считает заказы по статусу.
      *
-     * @param string|null $status Optional status filter.
-     * @return int Number of orders.
+     * @param string|null $status Необязательный фильтр статуса.
+     * @return int Количество заказов.
      */
     public function count(?string $status = null): int
     {

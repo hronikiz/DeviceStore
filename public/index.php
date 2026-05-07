@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 $config = require dirname(__DIR__) . '/src/bootstrap.php';
 
-(new \BotGear\App($config))->handle();
+(new \DeviceStore\App($config))->handle();

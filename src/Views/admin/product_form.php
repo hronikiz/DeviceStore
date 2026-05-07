@@ -1,6 +1,10 @@
 <?php require BASE_PATH . '/src/Views/admin/_nav.php'; ?>
-
 <?php
+$old = $old ?? [];
+$errors = $errors ?? [];
+$categories = $categories ?? [];
+$mode = $mode ?? 'create';
+$product = $product ?? [];
 $isEdit = $mode === 'edit';
 $heading = $isEdit ? 'Редактирование товара' : 'Добавление товара';
 $action = $isEdit ? url('admin-product-edit', ['id' => $product['id']]) : url('admin-product-create');
@@ -13,7 +17,7 @@ $action = $isEdit ? url('admin-product-edit', ['id' => $product['id']]) : url('a
 </section>
 
 <form class="form-panel wide" method="post" action="<?= h($action) ?>" data-validate="product">
-    <?= \BotGear\Core\Csrf::input() ?>
+    <?= \DeviceStore\Core\Csrf::input() ?>
     <div class="form-grid two">
         <label>
             Название

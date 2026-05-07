@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 /**
- * Escapes a value for safe HTML output.
+ * Экранирует значение для безопасного вывода в HTML.
  *
- * @param mixed $value Value that should be printed in HTML.
- * @return string Escaped string.
+ * @param mixed $value Значение для вывода в HTML.
+ * @return string Экранированная строка.
  */
 function h(mixed $value): string
 {
@@ -14,11 +14,11 @@ function h(mixed $value): string
 }
 
 /**
- * Builds an application URL with query parameters.
+ * Формирует ссылку приложения с query-параметрами.
  *
- * @param string $page Page route name.
- * @param array<string, mixed> $params Additional query parameters.
- * @return string Relative URL for the front controller.
+ * @param string $page Название маршрута страницы.
+ * @param array<string, mixed> $params Дополнительные параметры запроса.
+ * @return string Относительная ссылка для front controller.
  */
 function url(string $page, array $params = []): string
 {
@@ -28,10 +28,10 @@ function url(string $page, array $params = []): string
 }
 
 /**
- * Redirects the browser to another application page.
+ * Перенаправляет браузер на другую страницу приложения.
  *
- * @param string $page Page route name.
- * @param array<string, mixed> $params Additional query parameters.
+ * @param string $page Название маршрута страницы.
+ * @param array<string, mixed> $params Дополнительные параметры запроса.
  * @return never
  */
 function redirect(string $page, array $params = []): never
@@ -41,10 +41,10 @@ function redirect(string $page, array $params = []): never
 }
 
 /**
- * Stores a short message in the current session.
+ * Сохраняет короткое сообщение в текущей сессии.
  *
- * @param string $type Message type such as success, error, or info.
- * @param string $message Message text.
+ * @param string $type Тип сообщения: success, error или info.
+ * @param string $message Текст сообщения.
  * @return void
  */
 function flash(string $type, string $message): void
@@ -53,9 +53,9 @@ function flash(string $type, string $message): void
 }
 
 /**
- * Returns and clears flash messages from the current session.
+ * Возвращает и очищает flash-сообщения из текущей сессии.
  *
- * @return array<int, array{type:string,message:string}> Flash messages.
+ * @return array<int, array{type:string,message:string}> Список сообщений.
  */
 function consume_flash(): array
 {
@@ -66,12 +66,12 @@ function consume_flash(): array
 }
 
 /**
- * Reads a submitted value or fallback value for form repopulation.
+ * Возвращает отправленное значение или значение по умолчанию для повторного заполнения формы.
  *
- * @param array<string, mixed> $source Input array.
- * @param string $key Field name.
- * @param mixed $default Default value.
- * @return mixed Existing field value or default.
+ * @param array<string, mixed> $source Массив входных данных.
+ * @param string $key Название поля.
+ * @param mixed $default Значение по умолчанию.
+ * @return mixed Значение поля или значение по умолчанию.
  */
 function field_value(array $source, string $key, mixed $default = ''): mixed
 {
@@ -79,10 +79,10 @@ function field_value(array $source, string $key, mixed $default = ''): mixed
 }
 
 /**
- * Formats a price for display.
+ * Форматирует цену для вывода.
  *
- * @param int|float|string $price Numeric price.
- * @return string Human-readable price with currency.
+ * @param int|float|string $price Числовое значение цены.
+ * @return string Цена в удобном формате с валютой.
  */
 function money(int|float|string $price): string
 {
@@ -90,10 +90,10 @@ function money(int|float|string $price): string
 }
 
 /**
- * Returns a readable product type label.
+ * Возвращает читаемое название типа товара.
  *
- * @param string $type Stored product type.
- * @return string Product type label.
+ * @param string $type Тип товара из хранилища.
+ * @return string Название типа товара.
  */
 function product_type_label(string $type): string
 {
@@ -106,10 +106,10 @@ function product_type_label(string $type): string
 }
 
 /**
- * Returns a readable order status label.
+ * Возвращает читаемое название статуса заказа.
  *
- * @param string $status Stored order status.
- * @return string Status label.
+ * @param string $status Статус заказа из хранилища.
+ * @return string Название статуса.
  */
 function order_status_label(string $status): string
 {

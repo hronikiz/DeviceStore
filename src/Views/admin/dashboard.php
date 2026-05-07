@@ -7,12 +7,12 @@
 </section>
 
 <div class="stats-grid">
-    <div><strong><?= h($stats['products']) ?></strong><span>товаров</span></div>
-    <div><strong><?= h($stats['categories']) ?></strong><span>категорий</span></div>
-    <div><strong><?= h($stats['orders']) ?></strong><span>заказов всего</span></div>
-    <div><strong><?= h($stats['newOrders']) ?></strong><span>новых заказов</span></div>
-    <div><strong><?= h($stats['lowStock']) ?></strong><span>мало на складе</span></div>
-    <div><strong><?= h($stats['users']) ?></strong><span>пользователей</span></div>
+    <div><strong><?= h($stats['products'] ?? 0) ?></strong><span>товаров</span></div>
+    <div><strong><?= h($stats['categories'] ?? 0) ?></strong><span>категорий</span></div>
+    <div><strong><?= h($stats['orders'] ?? 0) ?></strong><span>заказов всего</span></div>
+    <div><strong><?= h($stats['newOrders'] ?? 0) ?></strong><span>новых заказов</span></div>
+    <div><strong><?= h($stats['lowStock'] ?? 0) ?></strong><span>мало на складе</span></div>
+    <div><strong><?= h($stats['users'] ?? 0) ?></strong><span>пользователей</span></div>
 </div>
 
 <section class="quick-actions">

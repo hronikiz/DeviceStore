@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BotGear\Core;
+namespace DeviceStore\Core;
 
 /**
- * Stores application tables in a JSON file and provides small CRUD helpers.
+ * Хранит таблицы приложения в JSON-файле и предоставляет простые CRUD-операции.
  */
 final class FileDatabase
 {
@@ -18,9 +18,9 @@ final class FileDatabase
     private array $tables = ['users', 'categories', 'products', 'orders'];
 
     /**
-     * Creates a database instance and initializes seed data when the file is absent.
+     * Создает экземпляр базы и добавляет начальные данные, если файла еще нет.
      *
-     * @param string $path Absolute path to the JSON database file.
+     * @param string $path Абсолютный путь к JSON-файлу базы данных.
      */
     public function __construct(string $path)
     {
@@ -29,10 +29,10 @@ final class FileDatabase
     }
 
     /**
-     * Returns all rows from a table.
+     * Возвращает все строки из таблицы.
      *
-     * @param string $table Table name.
-     * @return array<int, array<string, mixed>> Table rows.
+     * @param string $table Название таблицы.
+     * @return array<int, array<string, mixed>> Строки таблицы.
      */
     public function all(string $table): array
     {
@@ -42,11 +42,11 @@ final class FileDatabase
     }
 
     /**
-     * Finds a single row by numeric identifier.
+     * Ищет одну строку по числовому идентификатору.
      *
-     * @param string $table Table name.
-     * @param int $id Row identifier.
-     * @return array<string, mixed>|null Row data or null when not found.
+     * @param string $table Название таблицы.
+     * @param int $id Идентификатор строки.
+     * @return array<string, mixed>|null Данные строки или null, если запись не найдена.
      */
     public function find(string $table, int $id): ?array
     {
@@ -62,11 +62,11 @@ final class FileDatabase
     }
 
     /**
-     * Returns rows that satisfy a predicate callback.
+     * Возвращает строки, которые удовлетворяют условию callback-функции.
      *
-     * @param string $table Table name.
-     * @param callable(array<string, mixed>):bool $predicate Filtering callback.
-     * @return array<int, array<string, mixed>> Filtered rows.
+     * @param string $table Название таблицы.
+     * @param callable(array<string, mixed>):bool $predicate Callback для фильтрации.
+     * @return array<int, array<string, mixed>> Отфильтрованные строки.
      */
     public function where(string $table, callable $predicate): array
     {
@@ -76,11 +76,11 @@ final class FileDatabase
     }
 
     /**
-     * Inserts a row into a table and persists the database.
+     * Добавляет строку в таблицу и сохраняет базу данных.
      *
-     * @param string $table Table name.
-     * @param array<string, mixed> $row Row values.
-     * @return array<string, mixed> Inserted row with identifier.
+     * @param string $table Название таблицы.
+     * @param array<string, mixed> $row Значения строки.
+     * @return array<string, mixed> Добавленная строка с идентификатором.
      */
     public function insert(string $table, array $row): array
     {
@@ -94,12 +94,12 @@ final class FileDatabase
     }
 
     /**
-     * Updates a row by identifier and persists the database.
+     * Обновляет строку по идентификатору и сохраняет базу данных.
      *
-     * @param string $table Table name.
-     * @param int $id Row identifier.
-     * @param array<string, mixed> $values Values to merge into the row.
-     * @return array<string, mixed>|null Updated row or null when not found.
+     * @param string $table Название таблицы.
+     * @param int $id Идентификатор строки.
+     * @param array<string, mixed> $values Значения для объединения со строкой.
+     * @return array<string, mixed>|null Обновленная строка или null, если запись не найдена.
      */
     public function update(string $table, int $id, array $values): ?array
     {
@@ -118,11 +118,11 @@ final class FileDatabase
     }
 
     /**
-     * Deletes a row by identifier and persists the database.
+     * Удаляет строку по идентификатору и сохраняет базу данных.
      *
-     * @param string $table Table name.
-     * @param int $id Row identifier.
-     * @return bool True when a row was removed.
+     * @param string $table Название таблицы.
+     * @param int $id Идентификатор строки.
+     * @return bool True, если строка была удалена.
      */
     public function delete(string $table, int $id): bool
     {
@@ -141,7 +141,7 @@ final class FileDatabase
     }
 
     /**
-     * Loads the database from disk or creates a seeded database.
+     * Загружает базу с диска или создает базу с начальными данными.
      *
      * @return void
      */
@@ -169,7 +169,7 @@ final class FileDatabase
     }
 
     /**
-     * Persists the current database state to disk.
+     * Сохраняет текущее состояние базы данных на диск.
      *
      * @return void
      */
@@ -183,10 +183,10 @@ final class FileDatabase
     }
 
     /**
-     * Calculates the next numeric identifier for a table.
+     * Вычисляет следующий числовой идентификатор для таблицы.
      *
-     * @param string $table Table name.
-     * @return int Next identifier.
+     * @param string $table Название таблицы.
+     * @return int Следующий идентификатор.
      */
     private function nextId(string $table): int
     {
@@ -196,22 +196,22 @@ final class FileDatabase
     }
 
     /**
-     * Validates that a table exists in the database.
+     * Проверяет, что таблица существует в базе данных.
      *
-     * @param string $table Table name.
+     * @param string $table Название таблицы.
      * @return void
      */
     private function guardTable(string $table): void
     {
         if (!in_array($table, $this->tables, true)) {
-            throw new \InvalidArgumentException('Unknown table: ' . $table);
+            throw new \InvalidArgumentException('Неизвестная таблица: ' . $table);
         }
     }
 
     /**
-     * Returns the default database content for the first launch.
+     * Возвращает начальное содержимое базы данных для первого запуска.
      *
-     * @return array<string, array<int, array<string, mixed>>> Seeded tables.
+     * @return array<string, array<int, array<string, mixed>>> Таблицы с начальными данными.
      */
     private function seedData(): array
     {
@@ -222,7 +222,7 @@ final class FileDatabase
                 [
                     'id' => 1,
                     'name' => 'Главный администратор',
-                    'email' => 'admin@botgear.local',
+                    'email' => 'admin@devicestore.local',
                     'password_hash' => password_hash('Admin12345!', PASSWORD_DEFAULT),
                     'role' => 'admin',
                     'reset_token_hash' => null,
@@ -232,7 +232,7 @@ final class FileDatabase
                 [
                     'id' => 2,
                     'name' => 'Демо покупатель',
-                    'email' => 'user@botgear.local',
+                    'email' => 'user@devicestore.local',
                     'password_hash' => password_hash('User12345!', PASSWORD_DEFAULT),
                     'role' => 'user',
                     'reset_token_hash' => null,

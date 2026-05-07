@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace BotGear;
+namespace DeviceStore;
 
-use BotGear\Core\Auth;
-use BotGear\Core\Csrf;
-use BotGear\Core\FileDatabase;
-use BotGear\Core\Validator;
-use BotGear\Repositories\CategoryRepository;
-use BotGear\Repositories\OrderRepository;
-use BotGear\Repositories\ProductRepository;
-use BotGear\Repositories\UserRepository;
+use DeviceStore\Core\Auth;
+use DeviceStore\Core\Csrf;
+use DeviceStore\Core\FileDatabase;
+use DeviceStore\Core\Validator;
+use DeviceStore\Repositories\CategoryRepository;
+use DeviceStore\Repositories\OrderRepository;
+use DeviceStore\Repositories\ProductRepository;
+use DeviceStore\Repositories\UserRepository;
 
 /**
- * Front controller application class that routes requests to page handlers.
+ * Основной класс приложения: связывает маршруты с обработчиками страниц.
  */
 final class App
 {
@@ -32,9 +32,9 @@ final class App
     private OrderRepository $orders;
 
     /**
-     * Creates repositories, authentication, and database services.
+     * Создает репозитории, авторизацию и сервис базы данных.
      *
-     * @param array<string, mixed> $config Application configuration.
+     * @param array<string, mixed> $config Конфигурация приложения.
      */
     public function __construct(array $config)
     {
@@ -48,7 +48,7 @@ final class App
     }
 
     /**
-     * Handles the current HTTP request.
+     * Обрабатывает текущий HTTP-запрос.
      *
      * @return void
      */
@@ -79,7 +79,7 @@ final class App
     }
 
     /**
-     * Renders the public home page.
+     * Отображает публичную главную страницу.
      *
      * @return void
      */
@@ -98,7 +98,7 @@ final class App
     }
 
     /**
-     * Renders the public searchable product catalog.
+     * Отображает публичный каталог товаров с поиском.
      *
      * @return void
      */
@@ -121,7 +121,7 @@ final class App
     }
 
     /**
-     * Renders a product page and processes order creation.
+     * Отображает страницу товара и обрабатывает создание заказа.
      *
      * @return void
      */
@@ -174,7 +174,7 @@ final class App
     }
 
     /**
-     * Renders and processes user registration.
+     * Отображает и обрабатывает регистрацию пользователя.
      *
      * @return void
      */
@@ -216,7 +216,7 @@ final class App
     }
 
     /**
-     * Renders and processes user login.
+     * Отображает и обрабатывает вход пользователя.
      *
      * @return void
      */
@@ -252,7 +252,7 @@ final class App
     }
 
     /**
-     * Logs out the current user.
+     * Завершает сессию текущего пользователя.
      *
      * @return void
      */
@@ -269,7 +269,7 @@ final class App
     }
 
     /**
-     * Renders and processes password recovery request.
+     * Отображает и обрабатывает запрос восстановления пароля.
      *
      * @return void
      */
@@ -304,7 +304,7 @@ final class App
     }
 
     /**
-     * Renders and processes password reset.
+     * Отображает и обрабатывает установку нового пароля.
      *
      * @return void
      */
@@ -340,7 +340,7 @@ final class App
     }
 
     /**
-     * Renders the current user's orders.
+     * Отображает заказы текущего пользователя.
      *
      * @return void
      */
@@ -356,7 +356,7 @@ final class App
     }
 
     /**
-     * Renders the administrator dashboard.
+     * Отображает панель администратора.
      *
      * @return void
      */
@@ -377,7 +377,7 @@ final class App
     }
 
     /**
-     * Renders the administrator product list.
+     * Отображает список товаров для администратора.
      *
      * @return void
      */
@@ -402,7 +402,7 @@ final class App
     }
 
     /**
-     * Renders and processes product creation.
+     * Отображает и обрабатывает создание товара.
      *
      * @return void
      */
@@ -439,7 +439,7 @@ final class App
     }
 
     /**
-     * Renders and processes product editing.
+     * Отображает и обрабатывает редактирование товара.
      *
      * @return void
      */
@@ -484,7 +484,7 @@ final class App
     }
 
     /**
-     * Processes product deletion.
+     * Обрабатывает удаление товара.
      *
      * @return void
      */
@@ -502,7 +502,7 @@ final class App
     }
 
     /**
-     * Renders and processes category management.
+     * Отображает и обрабатывает управление категориями.
      *
      * @return void
      */
@@ -551,7 +551,7 @@ final class App
     }
 
     /**
-     * Renders and processes order management.
+     * Отображает и обрабатывает управление заказами.
      *
      * @return void
      */
@@ -574,7 +574,7 @@ final class App
     }
 
     /**
-     * Renders and processes administrator account creation.
+     * Отображает и обрабатывает создание учетной записи администратора.
      *
      * @return void
      */
@@ -614,7 +614,7 @@ final class App
     }
 
     /**
-     * Renders a 404 page.
+     * Отображает страницу 404.
      *
      * @return void
      */
@@ -625,7 +625,7 @@ final class App
     }
 
     /**
-     * Ensures the current visitor is authenticated.
+     * Проверяет, что текущий посетитель вошел в систему.
      *
      * @return void
      */
@@ -638,7 +638,7 @@ final class App
     }
 
     /**
-     * Ensures the current visitor is an administrator.
+     * Проверяет, что текущий посетитель является администратором.
      *
      * @return void
      */
@@ -651,10 +651,10 @@ final class App
     }
 
     /**
-     * Ensures that a POST request contains a valid CSRF token.
+     * Проверяет, что POST-запрос содержит корректный CSRF-токен.
      *
-     * @param string $fallbackPage Page used when validation fails.
-     * @param array<string, mixed> $params Query parameters for fallback URL.
+     * @param string $fallbackPage Страница для перенаправления при ошибке проверки.
+     * @param array<string, mixed> $params Параметры ссылки для перенаправления.
      * @return void
      */
     private function requireValidCsrf(string $fallbackPage, array $params = []): void
@@ -666,9 +666,9 @@ final class App
     }
 
     /**
-     * Checks whether the current request method is POST.
+     * Проверяет, является ли текущий запрос POST-запросом.
      *
-     * @return bool True for POST requests.
+     * @return bool True для POST-запросов.
      */
     private function isPost(): bool
     {
@@ -676,11 +676,11 @@ final class App
     }
 
     /**
-     * Renders a view inside the main layout.
+     * Отображает шаблон внутри основного макета.
      *
-     * @param string $view View path inside src/Views without extension.
-     * @param array<string, mixed> $params Variables available to the view.
-     * @param string $title Page title.
+     * @param string $view Путь к шаблону внутри src/Views без расширения.
+     * @param array<string, mixed> $params Переменные, доступные в шаблоне.
+     * @param string $title Заголовок страницы.
      * @return void
      */
     private function render(string $view, array $params, string $title): void
@@ -700,9 +700,9 @@ final class App
     }
 
     /**
-     * Builds a category identifier to name map.
+     * Формирует карту названий категорий по их идентификаторам.
      *
-     * @return array<int, string> Category map.
+     * @return array<int, string> Карта категорий.
      */
     private function categoryMap(): array
     {
@@ -716,9 +716,9 @@ final class App
     }
 
     /**
-     * Builds product counts grouped by category.
+     * Формирует количество товаров по категориям.
      *
-     * @return array<int, int> Category product count map.
+     * @return array<int, int> Карта количества товаров по категориям.
      */
     private function categoryProductCounts(): array
     {
@@ -732,9 +732,9 @@ final class App
     }
 
     /**
-     * Builds a product identifier to product map.
+     * Формирует карту товаров по их идентификаторам.
      *
-     * @return array<int, array<string, mixed>> Product map.
+     * @return array<int, array<string, mixed>> Карта товаров.
      */
     private function productMap(): array
     {
@@ -748,9 +748,9 @@ final class App
     }
 
     /**
-     * Builds a user identifier to user map.
+     * Формирует карту пользователей по их идентификаторам.
      *
-     * @return array<int, array<string, mixed>> User map.
+     * @return array<int, array<string, mixed>> Карта пользователей.
      */
     private function userMap(): array
     {

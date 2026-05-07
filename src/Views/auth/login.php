@@ -1,3 +1,7 @@
+<?php
+$old = $old ?? [];
+$errors = $errors ?? [];
+?>
 <section class="auth-shell">
     <div>
         <p class="eyebrow">Доступ к аккаунту</p>
@@ -6,7 +10,7 @@
     </div>
 
     <form class="form-panel" method="post" data-validate="login">
-        <?= \BotGear\Core\Csrf::input() ?>
+        <?= \DeviceStore\Core\Csrf::input() ?>
         <label>
             Email
             <input type="email" name="email" value="<?= h(field_value($old, 'email')) ?>" required>

@@ -1,3 +1,9 @@
+<?php
+$filters = $filters ?? [];
+$products = $products ?? [];
+$categories = $categories ?? [];
+$categoryMap = $categoryMap ?? [];
+?>
 <section class="page-heading">
     <p class="eyebrow">Каталог</p>
     <h1>Каталог товаров</h1>
@@ -8,14 +14,14 @@
     <input type="hidden" name="page" value="catalog">
     <label>
         Поиск
-        <input type="search" name="q" value="<?= h($filters['q']) ?>" placeholder="гарнитура, блок питания">
+        <input type="search" name="q" value="<?= h($filters['q'] ?? '') ?>" placeholder="гарнитура, блок питания">
     </label>
     <label>
         Категория
         <select name="category_id">
             <option value="0">Все категории</option>
             <?php foreach ($categories as $category): ?>
-                <option value="<?= h($category['id']) ?>" <?= (int) $filters['category_id'] === (int) $category['id'] ? 'selected' : '' ?>>
+                <option value="<?= h($category['id']) ?>" <?= (int) ($filters['category_id'] ?? 0) === (int) $category['id'] ? 'selected' : '' ?>>
                     <?= h($category['name']) ?>
                 </option>
             <?php endforeach; ?>
@@ -25,17 +31,17 @@
         Тип
         <select name="product_type">
             <option value="">Все типы</option>
-            <option value="headset" <?= $filters['product_type'] === 'headset' ? 'selected' : '' ?>>Гарнитура</option>
-            <option value="component" <?= $filters['product_type'] === 'component' ? 'selected' : '' ?>>Комплектующее</option>
-            <option value="peripheral" <?= $filters['product_type'] === 'peripheral' ? 'selected' : '' ?>>Периферия</option>
+            <option value="headset" <?= ($filters['product_type'] ?? '') === 'headset' ? 'selected' : '' ?>>Гарнитура</option>
+            <option value="component" <?= ($filters['product_type'] ?? '') === 'component' ? 'selected' : '' ?>>Комплектующее</option>
+            <option value="peripheral" <?= ($filters['product_type'] ?? '') === 'peripheral' ? 'selected' : '' ?>>Периферия</option>
         </select>
     </label>
     <label>
         Цена до
-        <input type="number" name="max_price" min="0" step="1" value="<?= h($filters['max_price'] ?: '') ?>" placeholder="1500">
+        <input type="number" name="max_price" min="0" step="1" value="<?= h(($filters['max_price'] ?? '') ?: '') ?>" placeholder="1500">
     </label>
     <label class="check-line">
-        <input type="checkbox" name="available" value="1" <?= $filters['available'] === '1' ? 'checked' : '' ?>>
+        <input type="checkbox" name="available" value="1" <?= ($filters['available'] ?? '') === '1' ? 'checked' : '' ?>>
         В наличии
     </label>
     <button class="button" type="submit">Найти</button>

@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace BotGear\Repositories;
+namespace DeviceStore\Repositories;
 
-use BotGear\Core\FileDatabase;
+use DeviceStore\Core\FileDatabase;
 
 /**
- * Provides product persistence and search operations.
+ * Выполняет операции хранения и поиска товаров.
  */
 final class ProductRepository
 {
     private FileDatabase $db;
 
     /**
-     * Stores the database dependency.
+     * Сохраняет зависимость базы данных.
      *
-     * @param FileDatabase $db Application database.
+     * @param FileDatabase $db База данных приложения.
      */
     public function __construct(FileDatabase $db)
     {
@@ -24,9 +24,9 @@ final class ProductRepository
     }
 
     /**
-     * Returns all products sorted by newest first.
+     * Возвращает все товары с сортировкой от новых к старым.
      *
-     * @return array<int, array<string, mixed>> Product records.
+     * @return array<int, array<string, mixed>> Записи товаров.
      */
     public function all(): array
     {
@@ -37,10 +37,10 @@ final class ProductRepository
     }
 
     /**
-     * Finds a product by identifier.
+     * Ищет товар по идентификатору.
      *
-     * @param int $id Product identifier.
-     * @return array<string, mixed>|null Product record or null.
+     * @param int $id Идентификатор товара.
+     * @return array<string, mixed>|null Запись товара или null.
      */
     public function find(int $id): ?array
     {
@@ -48,10 +48,10 @@ final class ProductRepository
     }
 
     /**
-     * Returns featured products for the public home page.
+     * Возвращает рекомендованные товары для главной страницы.
      *
-     * @param int $limit Maximum number of products.
-     * @return array<int, array<string, mixed>> Featured products.
+     * @param int $limit Максимальное количество товаров.
+     * @return array<int, array<string, mixed>> Рекомендованные товары.
      */
     public function featured(int $limit = 3): array
     {
@@ -63,10 +63,10 @@ final class ProductRepository
     }
 
     /**
-     * Searches products by text and filter criteria.
+     * Ищет товары по тексту и фильтрам.
      *
-     * @param array<string, mixed> $filters Search criteria.
-     * @return array<int, array<string, mixed>> Matching products.
+     * @param array<string, mixed> $filters Критерии поиска.
+     * @return array<int, array<string, mixed>> Найденные товары.
      */
     public function search(array $filters): array
     {
@@ -109,10 +109,10 @@ final class ProductRepository
     }
 
     /**
-     * Creates a product.
+     * Создает товар.
      *
-     * @param array<string, mixed> $data Product values.
-     * @return array<string, mixed> Created product.
+     * @param array<string, mixed> $data Значения товара.
+     * @return array<string, mixed> Созданный товар.
      */
     public function create(array $data): array
     {
@@ -125,11 +125,11 @@ final class ProductRepository
     }
 
     /**
-     * Updates a product by identifier.
+     * Обновляет товар по идентификатору.
      *
-     * @param int $id Product identifier.
-     * @param array<string, mixed> $data Product values.
-     * @return array<string, mixed>|null Updated product or null.
+     * @param int $id Идентификатор товара.
+     * @param array<string, mixed> $data Значения товара.
+     * @return array<string, mixed>|null Обновленный товар или null.
      */
     public function update(int $id, array $data): ?array
     {
@@ -139,10 +139,10 @@ final class ProductRepository
     }
 
     /**
-     * Deletes a product by identifier.
+     * Удаляет товар по идентификатору.
      *
-     * @param int $id Product identifier.
-     * @return bool True when a product was removed.
+     * @param int $id Идентификатор товара.
+     * @return bool True, если товар был удален.
      */
     public function delete(int $id): bool
     {
@@ -150,11 +150,11 @@ final class ProductRepository
     }
 
     /**
-     * Decreases stock after a successful order.
+     * Уменьшает остаток на складе после успешного заказа.
      *
-     * @param int $id Product identifier.
-     * @param int $quantity Purchased quantity.
-     * @return bool True when stock was updated.
+     * @param int $id Идентификатор товара.
+     * @param int $quantity Купленное количество.
+     * @return bool True, если остаток был обновлен.
      */
     public function decreaseStock(int $id, int $quantity): bool
     {
@@ -170,10 +170,10 @@ final class ProductRepository
     }
 
     /**
-     * Counts products in a category.
+     * Считает товары в категории.
      *
-     * @param int $categoryId Category identifier.
-     * @return int Number of products.
+     * @param int $categoryId Идентификатор категории.
+     * @return int Количество товаров.
      */
     public function countByCategory(int $categoryId): int
     {
@@ -184,10 +184,10 @@ final class ProductRepository
     }
 
     /**
-     * Counts products with low stock.
+     * Считает товары с низким остатком.
      *
-     * @param int $threshold Stock threshold.
-     * @return int Number of low-stock products.
+     * @param int $threshold Порог остатка.
+     * @return int Количество товаров с низким остатком.
      */
     public function countLowStock(int $threshold = 3): int
     {

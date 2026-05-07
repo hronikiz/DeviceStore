@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace BotGear\Core;
+namespace DeviceStore\Core;
 
-use BotGear\Repositories\UserRepository;
+use DeviceStore\Repositories\UserRepository;
 
 /**
- * Manages user sessions and authorization checks.
+ * Управляет пользовательскими сессиями и проверками доступа.
  */
 final class Auth
 {
     private UserRepository $users;
 
     /**
-     * Starts a secure session and stores the user repository.
+     * Запускает защищенную сессию и сохраняет репозиторий пользователей.
      *
-     * @param UserRepository $users Repository used to load users.
+     * @param UserRepository $users Репозиторий для загрузки пользователей.
      */
     public function __construct(UserRepository $users)
     {
@@ -25,11 +25,11 @@ final class Auth
     }
 
     /**
-     * Attempts to authenticate a user by email and password.
+     * Пытается авторизовать пользователя по email и паролю.
      *
-     * @param string $email User email.
-     * @param string $password Plain password from the login form.
-     * @return bool True when credentials are valid.
+     * @param string $email Email пользователя.
+     * @param string $password Пароль из формы входа.
+     * @return bool True, если данные входа корректны.
      */
     public function attempt(string $email, string $password): bool
     {
@@ -45,9 +45,9 @@ final class Auth
     }
 
     /**
-     * Stores an authenticated user in the session.
+     * Сохраняет авторизованного пользователя в сессии.
      *
-     * @param array<string, mixed> $user User record.
+     * @param array<string, mixed> $user Запись пользователя.
      * @return void
      */
     public function login(array $user): void
@@ -57,7 +57,7 @@ final class Auth
     }
 
     /**
-     * Removes the authenticated user from the session.
+     * Удаляет авторизованного пользователя из сессии.
      *
      * @return void
      */
@@ -68,9 +68,9 @@ final class Auth
     }
 
     /**
-     * Returns the current authenticated user.
+     * Возвращает текущего авторизованного пользователя.
      *
-     * @return array<string, mixed>|null User record or null.
+     * @return array<string, mixed>|null Запись пользователя или null.
      */
     public function user(): ?array
     {
@@ -80,9 +80,9 @@ final class Auth
     }
 
     /**
-     * Checks whether a visitor is authenticated.
+     * Проверяет, авторизован ли посетитель.
      *
-     * @return bool True when a user is logged in.
+     * @return bool True, если пользователь вошел в систему.
      */
     public function check(): bool
     {
@@ -90,9 +90,9 @@ final class Auth
     }
 
     /**
-     * Checks whether the current user has administrator privileges.
+     * Проверяет, есть ли у текущего пользователя права администратора.
      *
-     * @return bool True for administrators.
+     * @return bool True для администраторов.
      */
     public function isAdmin(): bool
     {
@@ -102,7 +102,7 @@ final class Auth
     }
 
     /**
-     * Starts a PHP session with safer cookie options.
+     * Запускает PHP-сессию с более безопасными настройками cookie.
      *
      * @return void
      */

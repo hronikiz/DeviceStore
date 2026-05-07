@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace BotGear\Repositories;
+namespace DeviceStore\Repositories;
 
-use BotGear\Core\FileDatabase;
+use DeviceStore\Core\FileDatabase;
 
 /**
- * Provides user persistence operations.
+ * Выполняет операции хранения пользователей.
  */
 final class UserRepository
 {
     private FileDatabase $db;
 
     /**
-     * Stores the database dependency.
+     * Сохраняет зависимость базы данных.
      *
-     * @param FileDatabase $db Application database.
+     * @param FileDatabase $db База данных приложения.
      */
     public function __construct(FileDatabase $db)
     {
@@ -24,9 +24,9 @@ final class UserRepository
     }
 
     /**
-     * Returns all users ordered by identifier.
+     * Возвращает всех пользователей с сортировкой по идентификатору.
      *
-     * @return array<int, array<string, mixed>> User records.
+     * @return array<int, array<string, mixed>> Записи пользователей.
      */
     public function all(): array
     {
@@ -34,10 +34,10 @@ final class UserRepository
     }
 
     /**
-     * Finds a user by identifier.
+     * Ищет пользователя по идентификатору.
      *
-     * @param int $id User identifier.
-     * @return array<string, mixed>|null User record or null.
+     * @param int $id Идентификатор пользователя.
+     * @return array<string, mixed>|null Запись пользователя или null.
      */
     public function find(int $id): ?array
     {
@@ -45,10 +45,10 @@ final class UserRepository
     }
 
     /**
-     * Finds a user by email address.
+     * Ищет пользователя по email.
      *
-     * @param string $email Email address.
-     * @return array<string, mixed>|null User record or null.
+     * @param string $email Email-адрес.
+     * @return array<string, mixed>|null Запись пользователя или null.
      */
     public function findByEmail(string $email): ?array
     {
@@ -62,13 +62,13 @@ final class UserRepository
     }
 
     /**
-     * Creates a user with a securely hashed password.
+     * Создает пользователя с безопасно хешированным паролем.
      *
-     * @param string $name Display name.
-     * @param string $email Email address.
-     * @param string $password Plain password.
-     * @param string $role User role.
-     * @return array<string, mixed> Created user.
+     * @param string $name Отображаемое имя.
+     * @param string $email Email-адрес.
+     * @param string $password Пароль в открытом виде.
+     * @param string $role Роль пользователя.
+     * @return array<string, mixed> Созданный пользователь.
      */
     public function create(string $name, string $email, string $password, string $role = 'user'): array
     {
@@ -84,10 +84,10 @@ final class UserRepository
     }
 
     /**
-     * Creates and stores a password reset token for a user.
+     * Создает и сохраняет токен восстановления пароля для пользователя.
      *
-     * @param string $email User email.
-     * @return string|null Plain token for demo delivery or null when user is absent.
+     * @param string $email Email пользователя.
+     * @return string|null Открытый токен для отправки или null, если пользователя нет.
      */
     public function createResetToken(string $email): ?string
     {
@@ -107,10 +107,10 @@ final class UserRepository
     }
 
     /**
-     * Finds a user by password reset token.
+     * Ищет пользователя по токену восстановления пароля.
      *
-     * @param string $token Plain reset token.
-     * @return array<string, mixed>|null User record or null.
+     * @param string $token Открытый токен восстановления.
+     * @return array<string, mixed>|null Запись пользователя или null.
      */
     public function findByResetToken(string $token): ?array
     {
@@ -130,11 +130,11 @@ final class UserRepository
     }
 
     /**
-     * Updates a user password and clears reset token data.
+     * Обновляет пароль пользователя и очищает данные токена восстановления.
      *
-     * @param int $id User identifier.
-     * @param string $password New plain password.
-     * @return bool True when the user was updated.
+     * @param int $id Идентификатор пользователя.
+     * @param string $password Новый пароль в открытом виде.
+     * @return bool True, если пользователь был обновлен.
      */
     public function updatePassword(int $id, string $password): bool
     {

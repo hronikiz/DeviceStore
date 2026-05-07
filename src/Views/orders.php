@@ -1,3 +1,7 @@
+<?php
+$orders = $orders ?? [];
+$productMap = $productMap ?? [];
+?>
 <section class="page-heading">
     <p class="eyebrow">Аккаунт</p>
     <h1>Мои заказы</h1>

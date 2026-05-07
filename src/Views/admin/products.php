@@ -1,3 +1,9 @@
+<?php
+$filters = $filters ?? [];
+$products = $products ?? [];
+$categories = $categories ?? [];
+$categoryMap = $categoryMap ?? [];
+?>
 <?php require BASE_PATH . '/src/Views/admin/_nav.php'; ?>
 
 <section class="section-head">
@@ -12,14 +18,14 @@
     <input type="hidden" name="page" value="admin-products">
     <label>
         Поиск
-        <input type="search" name="q" value="<?= h($filters['q']) ?>" placeholder="название или описание">
+        <input type="search" name="q" value="<?= h($filters['q'] ?? '') ?>" placeholder="название или описание">
     </label>
     <label>
         Категория
         <select name="category_id">
             <option value="0">Все категории</option>
             <?php foreach ($categories as $category): ?>
-                <option value="<?= h($category['id']) ?>" <?= (int) $filters['category_id'] === (int) $category['id'] ? 'selected' : '' ?>>
+                <option value="<?= h($category['id']) ?>" <?= (int) ($filters['category_id'] ?? 0) === (int) $category['id'] ? 'selected' : '' ?>>
                     <?= h($category['name']) ?>
                 </option>
             <?php endforeach; ?>
@@ -29,13 +35,13 @@
         Тип
         <select name="product_type">
             <option value="">Все типы</option>
-            <option value="headset" <?= $filters['product_type'] === 'headset' ? 'selected' : '' ?>>Гарнитура</option>
-            <option value="component" <?= $filters['product_type'] === 'component' ? 'selected' : '' ?>>Комплектующее</option>
-            <option value="peripheral" <?= $filters['product_type'] === 'peripheral' ? 'selected' : '' ?>>Периферия</option>
+            <option value="headset" <?= ($filters['product_type'] ?? '') === 'headset' ? 'selected' : '' ?>>Гарнитура</option>
+            <option value="component" <?= ($filters['product_type'] ?? '') === 'component' ? 'selected' : '' ?>>Комплектующее</option>
+            <option value="peripheral" <?= ($filters['product_type'] ?? '') === 'peripheral' ? 'selected' : '' ?>>Периферия</option>
         </select>
     </label>
     <label class="check-line">
-        <input type="checkbox" name="available" value="1" <?= $filters['available'] === '1' ? 'checked' : '' ?>>
+        <input type="checkbox" name="available" value="1" <?= ($filters['available'] ?? '') === '1' ? 'checked' : '' ?>>
         В наличии
     </label>
     <button class="button" type="submit">Фильтр</button>
@@ -66,7 +72,7 @@
                     <td class="actions-cell">
                         <a class="button small ghost" href="<?= h(url('admin-product-edit', ['id' => $product['id']])) ?>">Изменить</a>
                         <form method="post" action="<?= h(url('admin-product-delete')) ?>" onsubmit="return confirm('Удалить товар?')">
-                            <?= \BotGear\Core\Csrf::input() ?>
+                            <?= \DeviceStore\Core\Csrf::input() ?>
                             <input type="hidden" name="id" value="<?= h($product['id']) ?>">
                             <button class="button small danger" type="submit">Удалить</button>
                         </form>

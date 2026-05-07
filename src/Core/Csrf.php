@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace BotGear\Core;
+namespace DeviceStore\Core;
 
 /**
- * Provides CSRF token generation and validation for forms.
+ * Генерирует и проверяет CSRF-токены для форм.
  */
 final class Csrf
 {
     /**
-     * Returns the current CSRF token and creates it when needed.
+     * Возвращает текущий CSRF-токен и создает его при необходимости.
      *
-     * @return string CSRF token.
+     * @return string CSRF-токен.
      */
     public static function token(): string
     {
@@ -24,10 +24,10 @@ final class Csrf
     }
 
     /**
-     * Validates a submitted CSRF token.
+     * Проверяет отправленный CSRF-токен.
      *
-     * @param string|null $token Token from a form.
-     * @return bool True when the token matches the session.
+     * @param string|null $token Токен из формы.
+     * @return bool True, если токен совпадает с токеном в сессии.
      */
     public static function validate(?string $token): bool
     {
@@ -37,9 +37,9 @@ final class Csrf
     }
 
     /**
-     * Builds a hidden HTML input with the CSRF token.
+     * Формирует скрытое HTML-поле с CSRF-токеном.
      *
-     * @return string Hidden CSRF input.
+     * @return string Скрытое поле CSRF.
      */
     public static function input(): string
     {

@@ -1,3 +1,8 @@
+<?php
+$orders = $orders ?? [];
+$productMap = $productMap ?? [];
+$userMap = $userMap ?? [];
+?>
 <?php require BASE_PATH . '/src/Views/admin/_nav.php'; ?>
 
 <section class="page-heading">
@@ -35,7 +40,7 @@
                         <td><?= h(money($order['total_price'])) ?></td>
                         <td>
                             <form class="status-form" method="post">
-                                <?= \BotGear\Core\Csrf::input() ?>
+                                <?= \DeviceStore\Core\Csrf::input() ?>
                                 <input type="hidden" name="id" value="<?= h($order['id']) ?>">
                                 <select name="status">
                                     <?php foreach (['new', 'processing', 'shipped', 'done', 'cancelled'] as $status): ?>

@@ -1,6 +1,13 @@
+<?php
+/** @var \DeviceStore\Core\Auth|null $auth */
+$auth = $auth ?? null;
+$featuredProducts = $featuredProducts ?? [];
+$latestProducts = $latestProducts ?? [];
+$categories = $categories ?? [];
+?>
 <section class="hero">
     <div class="hero-copy">
-        <p class="eyebrow">BotGear Store</p>
+        <p class="eyebrow">DeviceStore</p>
         <h1>Гарнитуры и комплектующие для игрового сетапа</h1>
         <p>
             Подберите гарнитуру, клавиатуру, мышь или комплектующие и оформите заказ онлайн.
@@ -8,7 +15,7 @@
         </p>
         <div class="hero-actions">
             <a class="button" href="<?= h(url('catalog')) ?>">Смотреть каталог</a>
-            <?php if (!$auth->check()): ?>
+            <?php if ($auth === null || !$auth->check()): ?>
                 <a class="button ghost" href="<?= h(url('login')) ?>">Войти</a>
             <?php endif; ?>
         </div>

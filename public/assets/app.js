@@ -1,4 +1,4 @@
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+﻿const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const telegramPattern = /^@?[A-Za-z0-9_]{5,32}$/;
 const phonePattern = /^[0-9+()\s-]{6,20}$/;
 
@@ -94,7 +94,7 @@ function validateOrder(form) {
     }
 
     if (!telegramPattern.test(value(form, 'customer_telegram'))) {
-        errors.customer_telegram = 'Введите Telegram username, например @botgear_user.';
+        errors.customer_telegram = 'Введите Telegram username, например @devicestore_user.';
     }
 
     if (!phonePattern.test(value(form, 'customer_phone'))) {

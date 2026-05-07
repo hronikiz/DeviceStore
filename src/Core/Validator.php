@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace BotGear\Core;
+namespace DeviceStore\Core;
 
 /**
- * Validates and normalizes user input from application forms.
+ * Проверяет и нормализует пользовательский ввод из форм приложения.
  */
 final class Validator
 {
     /**
-     * Validates registration data.
+     * Проверяет данные регистрации.
      *
-     * @param array<string, mixed> $input Raw form input.
-     * @return array{errors:array<string,string>,data:array<string,mixed>} Validation result.
+     * @param array<string, mixed> $input Необработанные данные формы.
+     * @return array{errors:array<string,string>,data:array<string,mixed>} Результат проверки.
      */
     public static function register(array $input): array
     {
@@ -43,10 +43,10 @@ final class Validator
     }
 
     /**
-     * Validates login data.
+     * Проверяет данные входа.
      *
-     * @param array<string, mixed> $input Raw form input.
-     * @return array{errors:array<string,string>,data:array<string,mixed>} Validation result.
+     * @param array<string, mixed> $input Необработанные данные формы.
+     * @return array{errors:array<string,string>,data:array<string,mixed>} Результат проверки.
      */
     public static function login(array $input): array
     {
@@ -68,10 +68,10 @@ final class Validator
     }
 
     /**
-     * Validates product creation or editing data.
+     * Проверяет данные создания или редактирования товара.
      *
-     * @param array<string, mixed> $input Raw form input.
-     * @return array{errors:array<string,string>,data:array<string,mixed>} Validation result.
+     * @param array<string, mixed> $input Необработанные данные формы.
+     * @return array{errors:array<string,string>,data:array<string,mixed>} Результат проверки.
      */
     public static function product(array $input): array
     {
@@ -119,11 +119,11 @@ final class Validator
     }
 
     /**
-     * Validates order data.
+     * Проверяет данные заказа.
      *
-     * @param array<string, mixed> $input Raw form input.
-     * @param array<string, mixed> $product Product being ordered.
-     * @return array{errors:array<string,string>,data:array<string,mixed>} Validation result.
+     * @param array<string, mixed> $input Необработанные данные формы.
+     * @param array<string, mixed> $product Товар, который заказывают.
+     * @return array{errors:array<string,string>,data:array<string,mixed>} Результат проверки.
      */
     public static function order(array $input, array $product): array
     {
@@ -145,7 +145,7 @@ final class Validator
         }
 
         if (!preg_match('/^@?[A-Za-z0-9_]{5,32}$/', $data['customer_telegram'])) {
-            $errors['customer_telegram'] = 'Введите Telegram username, например @botgear_user.';
+            $errors['customer_telegram'] = 'Введите Telegram username, например @devicestore_user.';
         }
 
         if (!preg_match('/^[0-9+()\\s-]{6,20}$/', $data['customer_phone'])) {
@@ -164,10 +164,10 @@ final class Validator
     }
 
     /**
-     * Validates category data.
+     * Проверяет данные категории.
      *
-     * @param array<string, mixed> $input Raw form input.
-     * @return array{errors:array<string,string>,data:array<string,mixed>} Validation result.
+     * @param array<string, mixed> $input Необработанные данные формы.
+     * @return array{errors:array<string,string>,data:array<string,mixed>} Результат проверки.
      */
     public static function category(array $input): array
     {
@@ -182,10 +182,10 @@ final class Validator
     }
 
     /**
-     * Validates administrator creation data.
+     * Проверяет данные создания администратора.
      *
-     * @param array<string, mixed> $input Raw form input.
-     * @return array{errors:array<string,string>,data:array<string,mixed>} Validation result.
+     * @param array<string, mixed> $input Необработанные данные формы.
+     * @return array{errors:array<string,string>,data:array<string,mixed>} Результат проверки.
      */
     public static function adminUser(array $input): array
     {
@@ -196,10 +196,10 @@ final class Validator
     }
 
     /**
-     * Validates password reset request data.
+     * Проверяет данные запроса на восстановление пароля.
      *
-     * @param array<string, mixed> $input Raw form input.
-     * @return array{errors:array<string,string>,data:array<string,mixed>} Validation result.
+     * @param array<string, mixed> $input Необработанные данные формы.
+     * @return array{errors:array<string,string>,data:array<string,mixed>} Результат проверки.
      */
     public static function forgot(array $input): array
     {
@@ -214,10 +214,10 @@ final class Validator
     }
 
     /**
-     * Validates new password data for reset flow.
+     * Проверяет новый пароль при восстановлении доступа.
      *
-     * @param array<string, mixed> $input Raw form input.
-     * @return array{errors:array<string,string>,data:array<string,mixed>} Validation result.
+     * @param array<string, mixed> $input Необработанные данные формы.
+     * @return array{errors:array<string,string>,data:array<string,mixed>} Результат проверки.
      */
     public static function resetPassword(array $input): array
     {
@@ -237,10 +237,10 @@ final class Validator
     }
 
     /**
-     * Adds password validation errors when password rules are not met.
+     * Добавляет ошибки проверки пароля, если правила не выполнены.
      *
-     * @param string $password Password value.
-     * @param array<string, string> $errors Mutable error collection.
+     * @param string $password Значение пароля.
+     * @param array<string, string> $errors Изменяемый список ошибок.
      * @return void
      */
     private static function validatePassword(string $password, array &$errors): void
@@ -251,10 +251,10 @@ final class Validator
     }
 
     /**
-     * Checks whether an image path is a safe local asset or a valid URL.
+     * Проверяет, является ли путь изображения безопасным локальным ассетом или корректным URL.
      *
-     * @param string $path Image path.
-     * @return bool True when the path is acceptable.
+     * @param string $path Путь к изображению.
+     * @return bool True, если путь допустим.
      */
     private static function isValidImagePath(string $path): bool
     {

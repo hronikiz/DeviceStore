@@ -8,13 +8,13 @@ require BASE_PATH . '/src/helpers.php';
 
 spl_autoload_register(
     /**
-     * Loads project classes from the src directory.
+     * Загружает классы проекта из папки src.
      *
-     * @param string $class Fully qualified class name.
+     * @param string $class Полное имя класса.
      * @return void
      */
     static function (string $class): void {
-        $prefix = 'BotGear\\';
+        $prefix = 'DeviceStore\\';
 
         if (!str_starts_with($class, $prefix)) {
             return;
@@ -30,6 +30,6 @@ spl_autoload_register(
 );
 
 return [
-    'app_name' => 'BotGear Store',
+    'app_name' => 'DeviceStore',
     'database_path' => BASE_PATH . '/data/store.json',
 ];

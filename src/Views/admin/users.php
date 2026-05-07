@@ -1,3 +1,8 @@
+<?php
+$old = $old ?? [];
+$errors = $errors ?? [];
+$users = $users ?? [];
+?>
 <?php require BASE_PATH . '/src/Views/admin/_nav.php'; ?>
 
 <section class="page-heading">
@@ -7,7 +12,7 @@
 </section>
 
 <form class="form-panel wide" method="post" data-validate="register">
-    <?= \BotGear\Core\Csrf::input() ?>
+    <?= \DeviceStore\Core\Csrf::input() ?>
     <h2>Создать администратора</h2>
     <div class="form-grid two">
         <label>

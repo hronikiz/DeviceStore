@@ -1,3 +1,7 @@
+<?php
+$old = $old ?? [];
+$errors = $errors ?? [];
+?>
 <section class="auth-shell">
     <div>
         <p class="eyebrow">Новый покупатель</p>
@@ -6,7 +10,7 @@
     </div>
 
     <form class="form-panel" method="post" data-validate="register">
-        <?= \BotGear\Core\Csrf::input() ?>
+        <?= \DeviceStore\Core\Csrf::input() ?>
         <label>
             Имя
             <input type="text" name="name" minlength="2" value="<?= h(field_value($old, 'name')) ?>" required>

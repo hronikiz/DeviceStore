@@ -1,8 +1,15 @@
 <?php
 
-use BotGear\Core\Csrf;
+use DeviceStore\Core\Csrf;
 
-$user = $auth->user();
+/** @var \DeviceStore\Core\Auth|null $auth */
+$auth = $auth ?? null;
+$user = $auth !== null ? $auth->user() : null;
+$appName = $appName ?? '';
+$currentPage = $currentPage ?? '';
+$flashMessages = $flashMessages ?? [];
+$content = $content ?? '';
+$title = $title ?? '';
 ?>
 <!doctype html>
 <html lang="ru">
@@ -29,7 +36,7 @@ $user = $auth->user();
             <?php if ($user !== null): ?>
                 <a class="<?= $currentPage === 'orders' ? 'active' : '' ?>" href="<?= h(url('orders')) ?>">Мои заказы</a>
             <?php endif; ?>
-            <?php if ($auth->isAdmin()): ?>
+            <?php if ($auth !== null && $auth->isAdmin()): ?>
                 <a class="<?= str_starts_with($currentPage, 'admin') ? 'active' : '' ?>" href="<?= h(url('admin')) ?>">Админка</a>
             <?php endif; ?>
         </nav>

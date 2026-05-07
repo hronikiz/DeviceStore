@@ -1,5 +1,10 @@
+<?php
+$old = $old ?? [];
+$errors = $errors ?? [];
+$categories = $categories ?? [];
+$productCounts = $productCounts ?? [];
+?>
 <?php require BASE_PATH . '/src/Views/admin/_nav.php'; ?>
-
 <section class="section-head">
     <div>
         <p class="eyebrow">Справочник</p>
@@ -8,11 +13,11 @@
 </section>
 
 <form class="form-panel inline-form" method="post" data-validate="category">
-    <?= \BotGear\Core\Csrf::input() ?>
+    <?= \DeviceStore\Core\Csrf::input() ?>
     <input type="hidden" name="action" value="create">
     <label>
         Новая категория
-        <input type="text" name="name" minlength="3" value="<?= h(field_value($old, 'name')) ?>" required>
+        <input type="text" name="name" minlength="3" value="<?= h(field_value($old ?? [], 'name')) ?>" required>
         <small class="field-error" data-error-for="name"><?= h($errors['name'] ?? '') ?></small>
     </label>
     <button class="button" type="submit">Добавить</button>
@@ -38,7 +43,7 @@
                     <td><?= h($productCounts[(int) $category['id']] ?? 0) ?></td>
                     <td>
                         <form method="post" onsubmit="return confirm('Удалить категорию?')">
-                            <?= \BotGear\Core\Csrf::input() ?>
+                            <?= \DeviceStore\Core\Csrf::input() ?>
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="id" value="<?= h($category['id']) ?>">
                             <button class="button small danger" type="submit">Удалить</button>

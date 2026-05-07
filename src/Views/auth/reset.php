@@ -1,3 +1,7 @@
+<?php
+$errors = $errors ?? [];
+$token = $token ?? '';
+?>
 <section class="auth-shell">
     <div>
         <p class="eyebrow">Новый пароль</p>
@@ -6,7 +10,7 @@
     </div>
 
     <form class="form-panel" method="post" data-validate="register">
-        <?= \BotGear\Core\Csrf::input() ?>
+        <?= \DeviceStore\Core\Csrf::input() ?>
         <input type="hidden" name="token" value="<?= h($token) ?>">
         <label>
             Новый пароль

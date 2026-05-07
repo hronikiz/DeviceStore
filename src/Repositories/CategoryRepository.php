@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace BotGear\Repositories;
+namespace DeviceStore\Repositories;
 
-use BotGear\Core\FileDatabase;
+use DeviceStore\Core\FileDatabase;
 
 /**
- * Provides category persistence operations.
+ * Выполняет операции хранения категорий.
  */
 final class CategoryRepository
 {
     private FileDatabase $db;
 
     /**
-     * Stores the database dependency.
+     * Сохраняет зависимость базы данных.
      *
-     * @param FileDatabase $db Application database.
+     * @param FileDatabase $db База данных приложения.
      */
     public function __construct(FileDatabase $db)
     {
@@ -24,9 +24,9 @@ final class CategoryRepository
     }
 
     /**
-     * Returns all product categories.
+     * Возвращает все категории товаров.
      *
-     * @return array<int, array<string, mixed>> Category records.
+     * @return array<int, array<string, mixed>> Записи категорий.
      */
     public function all(): array
     {
@@ -34,10 +34,10 @@ final class CategoryRepository
     }
 
     /**
-     * Finds a category by identifier.
+     * Ищет категорию по идентификатору.
      *
-     * @param int $id Category identifier.
-     * @return array<string, mixed>|null Category record or null.
+     * @param int $id Идентификатор категории.
+     * @return array<string, mixed>|null Запись категории или null.
      */
     public function find(int $id): ?array
     {
@@ -45,10 +45,10 @@ final class CategoryRepository
     }
 
     /**
-     * Creates a category with a generated slug.
+     * Создает категорию со сгенерированным slug.
      *
-     * @param string $name Category name.
-     * @return array<string, mixed> Created category.
+     * @param string $name Название категории.
+     * @return array<string, mixed> Созданная категория.
      */
     public function create(string $name): array
     {
@@ -60,10 +60,10 @@ final class CategoryRepository
     }
 
     /**
-     * Deletes a category by identifier.
+     * Удаляет категорию по идентификатору.
      *
-     * @param int $id Category identifier.
-     * @return bool True when the category was removed.
+     * @param int $id Идентификатор категории.
+     * @return bool True, если категория была удалена.
      */
     public function delete(int $id): bool
     {
@@ -71,10 +71,10 @@ final class CategoryRepository
     }
 
     /**
-     * Builds a URL-safe slug from category text.
+     * Формирует безопасный для URL slug из названия категории.
      *
-     * @param string $name Category name.
-     * @return string Generated slug.
+     * @param string $name Название категории.
+     * @return string Сгенерированный slug.
      */
     private function slug(string $name): string
     {
