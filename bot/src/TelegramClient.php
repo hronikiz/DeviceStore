@@ -39,12 +39,19 @@ final class TelegramClient
 
     public function sendPhoto(int $chatId, string $photo, string $caption, array $options = []): array
     {
-        return $this->request('sendPhoto', array_merge([
+        $payload = array_merge([
             'chat_id' => $chatId,
-            'photo' => $photo,
             'caption' => $caption,
             'parse_mode' => 'HTML',
-        ], $options));
+        ], $options);
+
+        if (is_file($photo)) {
+            $payload['photo'] = curl_file_create($photo);
+            return $this->request('sendPhoto', $payload, true);
+        }
+
+        $payload['photo'] = $photo;
+        return $this->request('sendPhoto', $payload);
     }
 
     public function answerCallbackQuery(string $callbackQueryId, string $text = '', bool $showAlert = false): array
@@ -56,10 +63,10 @@ final class TelegramClient
         ]);
     }
 
-    private function request(string $method, array $payload): array
+    private function request(string $method, array $payload, bool $multipart = false): array
     {
         $ch = curl_init($this->apiUrl . $method);
-        curl_setopt_array($ch, $this->buildCurlOptions($payload));
+        curl_setopt_array($ch, $this->buildCurlOptions($payload, $multipart));
 
         $response = curl_exec($ch);
 
@@ -83,18 +90,28 @@ final class TelegramClient
             throw new RuntimeException('Telegram response decode error.');
         }
 
+        if (($decoded['ok'] ?? false) !== true) {
+            $errorMessage = isset($decoded['description']) ? (string) $decoded['description'] : 'Telegram error';
+            throw new RuntimeException('Telegram API error: ' . $errorMessage);
+        }
+
         return $decoded;
     }
 
-    private function buildCurlOptions(array $payload): array
+    private function buildCurlOptions(array $payload, bool $multipart = false): array
     {
         $options = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
-            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
-            CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_UNICODE),
             CURLOPT_TIMEOUT => 35,
         ];
+
+        if ($multipart) {
+            $options[CURLOPT_POSTFIELDS] = $payload;
+        } else {
+            $options[CURLOPT_HTTPHEADER] = ['Content-Type: application/json'];
+            $options[CURLOPT_POSTFIELDS] = json_encode($payload, JSON_UNESCAPED_UNICODE);
+        }
 
         $caPath = getenv('BOT_CACERT');
         $localCaPath = dirname(__DIR__, 1) . '/certs/cacert.pem';

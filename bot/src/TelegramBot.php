@@ -115,6 +115,12 @@ final class TelegramBot
             return;
         }
 
+        if (preg_match('/^catalog_category_(\d+)$/', $data, $matches) === 1) {
+            $this->sendCategoryProducts($chatId, (int) $matches[1]);
+            $this->client->answerCallbackQuery($callbackId, 'Категория');
+            return;
+        }
+
         if ($data === 'catalog') {
             $this->sendCatalog($chatId);
             $this->client->answerCallbackQuery($callbackId, 'Каталог');
@@ -204,15 +210,54 @@ final class TelegramBot
 
     private function sendCatalog(int $chatId): void
     {
-        $products = array_slice($this->products->all(), 0, 6);
+        $categories = $this->categories->all();
 
-        if ($products === []) {
+        if ($categories === []) {
             $this->client->sendMessage($chatId, 'Каталог пуст.');
             return;
         }
 
-        $lines = ['<b>Каталог DeviceStore</b>', 'Выберите товар кнопкой:'];
+        $lines = ['<b>Каталог DeviceStore</b>', 'Выберите категорию:'];
+        $buttons = [];
 
+        foreach ($categories as $category) {
+            $categoryId = (int) $category['id'];
+            $categoryName = $this->escape((string) $category['name']);
+            $count = $this->products->countByCategory($categoryId);
+
+            $lines[] = sprintf('• %s (%d)', $categoryName, $count);
+            $buttons[] = [
+                'text' => sprintf('%s (%d)', $categoryName, $count),
+                'callback_data' => 'catalog_category_' . $categoryId,
+            ];
+        }
+
+        $keyboard = array_chunk($buttons, 1);
+        $keyboard[] = [
+            ['text' => '💬 Поддержка', 'callback_data' => 'support'],
+            ['text' => '🌐 Сайт', 'callback_data' => 'site'],
+        ];
+
+        $text = implode("\n", $lines);
+        $this->client->sendMessage($chatId, $text, ['reply_markup' => json_encode(['inline_keyboard' => $keyboard])]);
+    }
+
+    private function sendCategoryProducts(int $chatId, int $categoryId): void
+    {
+        $categoryName = $this->getCategoryName($categoryId);
+        $products = $this->products->search(['category_id' => $categoryId]);
+
+        if ($products === []) {
+            $text = sprintf("<b>%s</b>\nВ этой категории пока нет товаров.", $this->escape($categoryName));
+            $keyboard = [
+                [['text' => '⬅️ К категориям', 'callback_data' => 'catalog']],
+                [['text' => '💬 Поддержка', 'callback_data' => 'support']],
+            ];
+            $this->client->sendMessage($chatId, $text, ['reply_markup' => json_encode(['inline_keyboard' => $keyboard])]);
+            return;
+        }
+
+        $lines = [sprintf('<b>Категория: %s</b>', $this->escape($categoryName)), 'Выберите товар:'];
         $buttons = [];
 
         foreach ($products as $product) {
@@ -228,8 +273,8 @@ final class TelegramBot
 
         $keyboard = array_chunk($buttons, 2);
         $keyboard[] = [
+            ['text' => '⬅️ К категориям', 'callback_data' => 'catalog'],
             ['text' => '💬 Поддержка', 'callback_data' => 'support'],
-            ['text' => '🌐 Сайт', 'callback_data' => 'site'],
         ];
 
         $text = implode("\n", $lines);
@@ -249,12 +294,62 @@ final class TelegramBot
         $keyboard = $this->buildProductKeyboard($productId);
         $photo = (string) ($product['image_url'] ?? '');
 
+        if ($photo !== '' && !$this->isHttpUrl($photo)) {
+            $localPhoto = $this->getLocalImagePath($photo);
+
+            if ($localPhoto !== null) {
+                $photo = $localPhoto;
+            } else {
+                $photo = $this->buildAssetUrl($photo);
+            }
+        }
+
         if ($photo === '') {
             $this->client->sendMessage($chatId, $caption, ['reply_markup' => json_encode(['inline_keyboard' => $keyboard])]);
             return;
         }
 
-        $this->client->sendPhoto($chatId, $photo, $caption, ['reply_markup' => json_encode(['inline_keyboard' => $keyboard])]);
+        try {
+            $this->client->sendPhoto($chatId, $photo, $caption, ['reply_markup' => json_encode(['inline_keyboard' => $keyboard])]);
+        } catch (RuntimeException $exception) {
+            $this->client->sendMessage($chatId, $caption, ['reply_markup' => json_encode(['inline_keyboard' => $keyboard])]);
+        }
+    }
+
+    private function getLocalImagePath(string $path): ?string
+    {
+        $root = dirname(__DIR__, 2);
+        $relativePath = ltrim($path, '/\\');
+        $possiblePaths = [
+            $root . '/public/' . $relativePath,
+            $root . '/' . $relativePath,
+        ];
+
+        foreach ($possiblePaths as $filePath) {
+            if (is_file($filePath)) {
+                return $filePath;
+            }
+        }
+
+        return null;
+    }
+
+    private function isHttpUrl(string $value): bool
+    {
+        return str_starts_with($value, 'http://') || str_starts_with($value, 'https://');
+    }
+
+    private function buildAssetUrl(string $path): string
+    {
+        $baseUrl = getenv('BOT_SITE_URL');
+
+        if (!is_string($baseUrl) || trim($baseUrl) === '') {
+            $baseUrl = 'http://127.0.0.1:8000/index.php';
+        }
+
+        $rootUrl = rtrim(preg_replace('#/[^/]*$#', '', $baseUrl), '/');
+
+        return $rootUrl . '/' . ltrim($path, '/');
     }
 
     private function buildProductCaption(array $product): string
