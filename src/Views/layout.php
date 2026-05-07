@@ -23,7 +23,13 @@ $title = $title ?? '';
 <body>
     <header class="topbar">
         <a class="brand" href="<?= h(url('home')) ?>">
-            <span class="brand-mark">BG</span>
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="7" y="12" width="34" height="24" rx="8" fill="currentColor"/>
+                    <rect x="16" y="19" width="16" height="10" rx="4" fill="#fff"/>
+                    <rect x="20" y="31" width="8" height="3" rx="1.5" fill="currentColor"/>
+                </svg>
+            </span>
             <span>
                 <strong><?= h($appName) ?></strong>
                 <small>компьютерная техника</small>
