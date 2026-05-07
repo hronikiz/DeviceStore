@@ -81,7 +81,7 @@ final class Validator
             'product_type' => (string) ($input['product_type'] ?? ''),
             'price' => (float) str_replace(',', '.', (string) ($input['price'] ?? 0)),
             'stock' => (int) ($input['stock'] ?? 0),
-            'image_url' => trim((string) ($input['image_url'] ?? 'assets/component.svg')),
+            'image_url' => trim((string) ($input['image_url'] ?? 'https://images.unsplash.com/photo-1753557346289-7f7bd0576d05?auto=format&fit=crop&w=1200&q=80')),
             'description' => trim((string) ($input['description'] ?? '')),
             'is_featured' => isset($input['is_featured']),
         ];

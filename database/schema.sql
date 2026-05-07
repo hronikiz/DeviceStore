@@ -1,7 +1,3 @@
--- Reference relational schema for the BotGear Store PHP project.
--- The running demo uses data/store.json as a local file database,
--- but these tables describe the same data structure for the report.
-
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     name VARCHAR(120) NOT NULL,

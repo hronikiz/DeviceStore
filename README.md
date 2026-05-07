@@ -41,7 +41,7 @@ http://127.0.0.1:8000
 
 ## Функциональные возможности
 
-- Публичная главная страница с динамическими товарами, категориями и статистикой.
+- Публичная главная страница с динамическими товарами и категориями.
 - Каталог товаров с формой поиска по названию, категории, типу, цене и наличию.
 - Регистрация и вход пользователей.
 - Хеширование паролей через `password_hash()` и проверка через `password_verify()`.
@@ -55,7 +55,7 @@ http://127.0.0.1:8000
 
 ## Сценарии взаимодействия
 
-1. Гость открывает главную страницу и видит товары, категории и статистику, которые загружаются из базы.
+1. Гость открывает главную страницу и видит товары и категории, которые загружаются из базы.
 2. Гость использует форму поиска в каталоге и фильтрует товары.
 3. Гость регистрируется или входит в систему.
 4. Авторизованный пользователь открывает карточку товара и оформляет заказ.
@@ -71,7 +71,9 @@ http://127.0.0.1:8000
 ```text
 public/
   index.php              Точка входа
-  assets/                CSS, JS и локальные изображения товаров
+  assets/                CSS, JS и резервные SVG-изображения
+bot/
+  bot.php                Минимальный Telegram-бот без сторонних библиотек
 src/
   App.php                Роутинг и обработчики страниц
   bootstrap.php          Автозагрузка и конфигурация
@@ -162,6 +164,30 @@ if ($data['price'] <= 0 || $data['price'] > 50000) {
 }
 ```
 
+## Telegram-бот
+
+В проект добавлен минимальный Telegram-бот `bot/bot.php`. Он использует тот же каталог товаров, что и сайт, и поддерживает команды:
+
+```text
+/start
+/catalog
+/product_1
+/help
+```
+
+Для реального запуска нужен токен от BotFather:
+
+```powershell
+$env:BOT_TOKEN="123456:YOUR_TELEGRAM_BOT_TOKEN"
+php bot/bot.php
+```
+
+Бот работает через long polling и не требует webhook, домена или дополнительных библиотек. Файл `data/bot_offset.txt` создается автоматически и хранит номер последнего обработанного сообщения.
+
+## Изображения товаров
+
+В каталоге используются фотографии с Unsplash. Они подключены как внешние URL, чтобы проект не раздувался локальными медиафайлами. При необходимости их можно заменить на свои изображения через админ-панель в поле `Изображение`.
+
 ## Ответы на контрольные вопросы
 
 **Что такое аутентификация?**  
@@ -204,3 +230,10 @@ https://github.com/your-username/botgear-store
 - Документация по `password_hash`: https://www.php.net/manual/ru/function.password-hash.php
 - Документация по PHP sessions: https://www.php.net/manual/ru/book.session.php
 - MDN Web Docs по HTML-формам: https://developer.mozilla.org/ru/docs/Learn/Forms
+- Telegram Bot API: https://core.telegram.org/bots/api
+- Unsplash, фото гарнитуры: https://unsplash.com/photos/black-gaming-headset-on-a-lighted-stand-ylxM9EIw1bw
+- Unsplash, фото клавиатуры: https://unsplash.com/photos/a-mechanical-keyboard-sits-on-a-desk-mat-yNBoyifsl5w
+- Unsplash, фото мыши: https://unsplash.com/photos/razer-gaming-mouse-YLdC7qO9M3g
+- Unsplash, фото блока питания: https://unsplash.com/photos/heres-a-caption-a-computer-power-supply-unit-is-shown-3pkXVlGK194
+- Unsplash, фото микрофона: https://unsplash.com/photos/focus-photography-of-gray-condenser-microphone-and-pop-filter-2mQSmmge7t8
+- Unsplash, фото вентилятора: https://unsplash.com/photos/a-black-computer-fan-is-shown-in-the-image-i8DCcH1HB_Y

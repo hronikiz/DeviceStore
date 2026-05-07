@@ -7,9 +7,9 @@ $action = $isEdit ? url('admin-product-edit', ['id' => $product['id']]) : url('a
 ?>
 
 <section class="page-heading">
-    <p class="eyebrow">Форма создания ресурса</p>
+    <p class="eyebrow">Товар</p>
     <h1><?= h($heading) ?></h1>
-    <p>Форма содержит разные типы полей и проверяется на стороне клиента и сервера.</p>
+    <p>Заполните карточку товара для каталога.</p>
 </section>
 
 <form class="form-panel wide" method="post" action="<?= h($action) ?>" data-validate="product">
@@ -54,7 +54,7 @@ $action = $isEdit ? url('admin-product-edit', ['id' => $product['id']]) : url('a
         </label>
         <label>
             Изображение
-            <input type="text" name="image_url" value="<?= h(field_value($old, 'image_url', 'assets/component.svg')) ?>" required>
+            <input type="text" name="image_url" value="<?= h(field_value($old, 'image_url', 'https://images.unsplash.com/photo-1753557346289-7f7bd0576d05?auto=format&fit=crop&w=1200&q=80')) ?>" required>
             <small class="field-error" data-error-for="image_url"><?= h($errors['image_url'] ?? '') ?></small>
         </label>
     </div>

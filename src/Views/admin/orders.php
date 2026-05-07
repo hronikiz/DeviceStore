@@ -1,7 +1,7 @@
 <?php require BASE_PATH . '/src/Views/admin/_nav.php'; ?>
 
 <section class="page-heading">
-    <p class="eyebrow">Управление данными</p>
+    <p class="eyebrow">Продажи</p>
     <h1>Заказы</h1>
     <p>Администратор видит заявки покупателей и меняет статус обработки.</p>
 </section>

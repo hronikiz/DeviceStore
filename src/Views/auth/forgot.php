@@ -1,8 +1,8 @@
 <section class="auth-shell">
     <div>
-        <p class="eyebrow">Дополнительное задание</p>
+        <p class="eyebrow">Доступ</p>
         <h1>Восстановление пароля</h1>
-        <p>В учебном режиме ссылка показывается на странице вместо отправки email.</p>
+        <p>Введите email, и система создаст ссылку для смены пароля.</p>
     </div>
 
     <form class="form-panel" method="post" data-validate="login">
@@ -15,7 +15,7 @@
         <button class="button" type="submit">Создать ссылку</button>
         <?php if ($resetUrl !== null): ?>
             <div class="demo-link">
-                <span>Демо-ссылка:</span>
+                <span>Ссылка для восстановления:</span>
                 <a href="<?= h($resetUrl) ?>"><?= h($resetUrl) ?></a>
             </div>
         <?php endif; ?>

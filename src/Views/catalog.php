@@ -1,7 +1,7 @@
 <section class="page-heading">
-    <p class="eyebrow">Публичный компонент</p>
+    <p class="eyebrow">Каталог</p>
     <h1>Каталог товаров</h1>
-    <p>Поиск работает по названию, описанию, категории, типу товара, цене и наличию.</p>
+    <p>Фильтруйте товары по категории, типу, цене и наличию.</p>
 </section>
 
 <form class="filter-bar" method="get" data-validate="search">

@@ -2,7 +2,7 @@
     <div>
         <p class="eyebrow">Доступ к аккаунту</p>
         <h1>Вход</h1>
-        <p>Демо-администратор: admin@botgear.local / Admin12345!</p>
+        <p>Войдите, чтобы оформить заказ и смотреть историю заявок.</p>
     </div>
 
     <form class="form-panel" method="post" data-validate="login">

@@ -2,7 +2,7 @@
 
 <section class="section-head">
     <div>
-        <p class="eyebrow">CRUD</p>
+        <p class="eyebrow">Каталог</p>
         <h1>Управление товарами</h1>
     </div>
     <a class="button" href="<?= h(url('admin-product-create')) ?>">Добавить товар</a>

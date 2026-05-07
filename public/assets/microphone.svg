@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="USB microphone">
-  <rect width="640" height="400" fill="#f4f0e9"/>
-  <rect x="256" y="70" width="128" height="190" rx="64" fill="#202124"/>
-  <path d="M284 116h72M284 154h72M284 192h72" stroke="#eef4f1" stroke-width="12" stroke-linecap="round"/>
-  <path d="M220 190c0 62 40 106 100 106s100-44 100-106" fill="none" stroke="#0f766e" stroke-width="18" stroke-linecap="round"/>
-  <path d="M320 296v44M268 340h104" stroke="#c35f16" stroke-width="18" stroke-linecap="round"/>
-</svg>

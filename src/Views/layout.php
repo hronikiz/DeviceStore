@@ -19,7 +19,7 @@ $user = $auth->user();
             <span class="brand-mark">BG</span>
             <span>
                 <strong><?= h($appName) ?></strong>
-                <small>витрина для Telegram-магазина</small>
+                <small>компьютерная техника</small>
             </span>
         </a>
 
@@ -59,8 +59,8 @@ $user = $auth->user();
     </main>
 
     <footer class="footer">
-        <span><?= h($appName) ?>, учебный PHP-проект</span>
-        <span>PHP, сессии, хеширование паролей, файловая база данных</span>
+        <span><?= h($appName) ?> © 2026</span>
+        <span>Заказы принимаем онлайн и в Telegram</span>
     </footer>
 </body>
 </html>

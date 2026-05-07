@@ -1,4 +1,5 @@
 data/*.json
+data/bot_offset.txt
 !data/.gitkeep
 server.*.log
 .DS_Store
